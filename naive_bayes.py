@@ -2,6 +2,9 @@ from collections import defaultdict
 from itertools import chain
 from math import log
 
+__author__ = ["",]
+
+
 class NaiveBayes:
 
     def __init__(self, featureset, featureset_class, binarization=False):
@@ -13,8 +16,8 @@ class NaiveBayes:
 
         >>> A = NaiveBayes(["cogito, ergo sum", "νόησις νοήσεως"], ["Latin", "Greek"])
 
-        :param text_class: str list
-        :param text_labels: str list
+        :param featureset: str list
+        :param featureset_class: str list
         """
 
         self.N_features = len(featureset)
@@ -46,11 +49,10 @@ class NaiveBayes:
         for c in set(featureset_class):
             class_words = list(chain(*labeled[c]))
             for w in words:
-                self.likelihood_probability[c][w] = self.likelihood( w, class_words)
+                self.likelihood_probability[c][w] = self.likelihood(w, class_words)
 
     def get_likelihood(self, c, w):
-        return self.likelihood_probability[c].setdefault(w,
-                                                      log(1/(len(self.likelihood_probability[c]) + self.N)))
+        return self.likelihood_probability[c].setdefault(w, log(1/(len(self.likelihood_probability[c]) + self.N)))
 
     def prior(self, c, labeled):
         """
